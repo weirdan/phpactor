@@ -36,6 +36,8 @@ use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 class RpcExtension implements Extension
 {
     const SERVICE_REQUEST_HANDLER = 'rpc.request_handler';
+    const TAG_RPC_HANDLER = 'rpc.handler';
+    const TAG_RPC_HANDLER_REGISTRY = 'rpc.handler_registry';
 
     /**
      * {@inheritDoc}
@@ -61,7 +63,7 @@ class RpcExtension implements Extension
 
         $container->register('rpc.handler_registry', function (Container $container) {
             $handlers = [];
-            foreach (array_keys($container->getServiceIdsForTag('rpc.handler')) as $serviceId) {
+            foreach (array_keys($container->getServiceIdsForTag(self::TAG_RPC_HANDLER)) as $serviceId) {
                 $handlers[] = $container->get($serviceId);
             }
 
@@ -75,19 +77,19 @@ class RpcExtension implements Extension
     {
         $container->register('rpc.handler.echo', function (Container $container) {
             return new EchoHandler();
-        }, [ 'rpc.handler' => [] ]);
+        }, [ self::TAG_RPC_HANDLER => [] ]);
 
         $container->register('rpc.handler.complete', function (Container $container) {
             return new CompleteHandler(
                 $container->get('application.complete')
             );
-        }, [ 'rpc.handler' => [] ]);
+        }, [ self::TAG_RPC_HANDLER => [] ]);
 
         $container->register('rpc.handler.class_search', function (Container $container) {
             return new ClassSearchHandler(
                 $container->get('application.class_search')
             );
-        }, [ 'rpc.handler' => [] ]);
+        }, [ self::TAG_RPC_HANDLER => [] ]);
 
         $container->register('rpc.handler.class_references', function (Container $container) {
             return new ReferencesHandler(
@@ -96,44 +98,44 @@ class RpcExtension implements Extension
                 $container->get('application.method_references'),
                 $container->get('source_code_filesystem.registry')
             );
-        }, [ 'rpc.handler' => [] ]);
+        }, [ self::TAG_RPC_HANDLER => [] ]);
 
         $container->register('rpc.handler.copy_class', function (Container $container) {
             return new ClassCopyHandler(
                 $container->get('application.class_copy')
             );
-        }, [ 'rpc.handler' => [] ]);
+        }, [ self::TAG_RPC_HANDLER => [] ]);
 
         $container->register('rpc.handler.move_class', function (Container $container) {
             return new ClassMoveHandler(
                 $container->get('application.class_mover'),
                 $container->getParameter('rpc.class_move.filesystem')
             );
-        }, [ 'rpc.handler' => [] ]);
+        }, [ self::TAG_RPC_HANDLER => [] ]);
 
         $container->register('rpc.handler.offset_info', function (Container $container) {
             return new OffsetInfoHandler(
                 $container->get('reflection.reflector')
             );
-        }, [ 'rpc.handler' => [] ]);
+        }, [ self::TAG_RPC_HANDLER => [] ]);
 
         $container->register('rpc.handler.transform', function (Container $container) {
             return new TransformHandler(
                 $container->get('code_transform.transform')
             );
-        }, [ 'rpc.handler' => [] ]);
+        }, [ self::TAG_RPC_HANDLER => [] ]);
 
         $container->register('rpc.handler.class_new', function (Container $container) {
             return new ClassNewHandler(
                 $container->get('application.class_new')
             );
-        }, [ 'rpc.handler' => [] ]);
+        }, [ self::TAG_RPC_HANDLER => [] ]);
 
         $container->register('rpc.handler.class_inflect', function (Container $container) {
             return new ClassInflectHandler(
                 $container->get('application.class_inflect')
             );
-        }, [ 'rpc.handler' => [] ]);
+        }, [ self::TAG_RPC_HANDLER => [] ]);
 
         $container->register('rpc.handler.context_menu', function (Container $container) {
             return new ContextMenuHandler(
@@ -142,24 +144,24 @@ class RpcExtension implements Extension
                 json_decode(file_get_contents(__DIR__ . '/menu.json'), true),
                 $container
             );
-        }, [ 'rpc.handler' => [] ]);
+        }, [ self::TAG_RPC_HANDLER => [] ]);
 
         $container->register('rpc.handler.cache_clear', function (Container $container) {
             return new CacheClearHandler(
                 $container->get('application.cache_clear')
             );
-        }, [ 'rpc.handler' => [] ]);
+        }, [ self::TAG_RPC_HANDLER => [] ]);
 
         $container->register('rpc.handler.status', function (Container $container) {
             return new StatusHandler(
                 $container->get('application.status'),
                 $container->get('config.paths')
             );
-        }, [ 'rpc.handler' => [] ]);
+        }, [ self::TAG_RPC_HANDLER => [] ]);
 
         $container->register('rpc.handler.config', function (Container $container) {
             return new ConfigHandler($container->getParameters());
-        }, [ 'rpc.handler' => [] ]);
+        }, [ self::TAG_RPC_HANDLER => [] ]);
     }
 
     /**

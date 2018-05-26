@@ -7,6 +7,7 @@ use Phpactor\CodeTransform\Domain\Macro\Macro;
 use Phpactor\CodeTransform\Domain\Macro\MacroDefinition;
 use Phpactor\CodeTransform\Domain\Macro\MacroDefinitionFactory;
 use Phpactor\CodeTransform\Domain\Macro\MacroRunner;
+use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Handler;
 use Phpactor\Extension\Rpc\Handler\AbstractHandler;
 use Phpactor\Extension\Rpc\Request;
@@ -17,6 +18,7 @@ use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 class MacroHandler implements Handler
 {
     const PARAM_PATH = 'path';
+    const PARAM_SOURCE = 'source';
 
     /**
      * @var Macro
@@ -47,9 +49,10 @@ class MacroHandler implements Handler
 
     public function handle(array $arguments)
     {
-        $path = $this->extractPath($arguments);
+        $arguments = $this->extractSourceCode($arguments);
 
         $definition = $this->definitionFactory->definitionFor(get_class($this->macro));
+
         $inputCallbacks = $this->collectInputCallbacks($definition, $arguments);
 
         if (count($inputCallbacks)) {
@@ -70,7 +73,7 @@ class MacroHandler implements Handler
         );
     }
 
-    private function extractPath(array &$arguments)
+    private function extractSourceCode(array $arguments)
     {
         if (!isset($arguments[self::PARAM_PATH])) {
             throw new InvalidArgumentException(sprintf(
@@ -78,10 +81,20 @@ class MacroHandler implements Handler
                 $this->name()
             ));
         }
+
+        if (!isset($arguments[self::PARAM_SOURCE])) {
+            throw new InvalidArgumentException(sprintf(
+                'Missing source argument for macro "%s"',
+                $this->name()
+            ));
+        }
         
-        $path = $arguments[self::PARAM_PATH];
+        $sourceCode = SourceCode::fromStringAndPath($arguments[self::PARAM_SOURCE], $arguments[self::PARAM_PATH]);
         unset($arguments[self::PARAM_PATH]);
-        return $path;
+        unset($arguments[self::PARAM_SOURCE]);
+        $arguments['source'] = $sourceCode;
+
+        return $arguments;
     }
 
     private function collectInputCallbacks(MacroDefinition $definition, array $arguments)

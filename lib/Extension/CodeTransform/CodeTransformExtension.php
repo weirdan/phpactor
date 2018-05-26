@@ -12,6 +12,8 @@ use Phpactor\Extension\CodeTransform\Command\ClassTransformCommand;
 use Phpactor\CodeTransform\Adapter\Native\GenerateNew\ClassGenerator;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigRenderer;
 use Phpactor\Extension\CodeTransform\Application\ClassNew;
+use Phpactor\Extension\Rpc\HandlerRegistry;
+use Phpactor\Extension\Rpc\RpcExtension;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 use Phpactor\CodeBuilder\Adapter\Twig\TwigExtension;
@@ -45,6 +47,7 @@ class CodeTransformExtension implements Extension
     const INDENTATION = 'code_transform.indentation';
     const GENERATE_ACCESSOR_PREFIX = 'code_transform.refactor.generate_accessor.prefix';
     const GENERATE_ACCESSOR_UPPER_CASE_FIRST = 'code_transform.refactor.generate_accessor.upper_case_first';
+    const TAG_MACRO = 'code_transform.rpc_macro';
 
 
     /**
@@ -72,7 +75,9 @@ class CodeTransformExtension implements Extension
         $this->registerApplication($container);
         $this->registerRenderer($container);
         $this->registerUpdater($container);
-        $this->registerRefactorings($container);
+        $this->registerMacros($container);
+        $this->registerMacroInfrastructure($container);
+        $this->registerRpc($container);
     }
 
     private function registerApplication(ContainerBuilder $container)
@@ -213,14 +218,35 @@ class CodeTransformExtension implements Extension
         });
     }
 
-    private function registerRefactorings(ContainerBuilder $container)
+    private function registerMacroInfrastructure(ContainerBuilder $container)
+    {
+        $container->register('code_transform.macro.definition_factory', function (Container $container) {
+            return new MacroDefinitionFactory();
+        });
+        $container->register('code_transform.macro.registry', function (Container $container) {
+            foreach ($container->getServiceIdsForTag(self::TAG_MACRO) as $macro) {
+                $macros[] = $macro;
+            }
+
+            return new MacroRegistry($macros);
+        });
+        $container->register('code_transform.macro.runner', function (Container $container) {
+            return new MacroRunner(
+                $container->get('code_transform.macro.registry'),
+                $containter->get('code_transform.macro.definition_factory')
+            );
+        });
+    }
+
+
+    private function registerMacros(ContainerBuilder $container)
     {
         $container->register('code_transform.refactor.extract_constant', function (Container $container) {
             return new WorseExtractConstant(
                 $container->get('reflection.reflector'),
                 $container->get('code_transform.updater')
             );
-        });
+        }, [ self::TAG_MACRO => [] ]);
 
         $container->register('code_transform.refactor.generate_method', function (Container $container) {
             return new WorseGenerateMethod(
@@ -228,7 +254,7 @@ class CodeTransformExtension implements Extension
                 $container->get('code_transform.builder_factory'),
                 $container->get('code_transform.updater')
             );
-        });
+        }, [ self::TAG_MACRO => [] ]);
 
         $container->register('code_transform.refactor.generate_accessor', function (Container $container) {
             return new WorseGenerateAccessor(
@@ -237,11 +263,11 @@ class CodeTransformExtension implements Extension
                 $container->getParameter(self::GENERATE_ACCESSOR_PREFIX),
                 $container->getParameter(self::GENERATE_ACCESSOR_UPPER_CASE_FIRST)
             );
-        });
+        }, [ self::TAG_MACRO => [] ]);
 
         $container->register('code_transform.refactor.rename_variable', function (Container $container) {
             return new TolerantRenameVariable();
-        });
+        }, [ self::TAG_MACRO => [] ]);
 
         $container->register('code_transform.refactor.override_method', function (Container $container) {
             return new WorseOverrideMethod(
@@ -249,7 +275,7 @@ class CodeTransformExtension implements Extension
                 $container->get('code_transform.builder_factory'),
                 $container->get('code_transform.updater')
             );
-        });
+        }, [ self::TAG_MACRO => [] ]);
 
         $container->register('code_transform.refactor.extract_method', function (Container $container) {
             return new WorseExtractMethod(
@@ -257,13 +283,13 @@ class CodeTransformExtension implements Extension
                 $container->get('code_transform.builder_factory'),
                 $container->get('code_transform.updater')
             );
-        });
+        }, [ self::TAG_MACRO => [] ]);
 
         $container->register('code_transform.refactor.class_import', function (Container $container) {
             return new TolerantImportClass(
                 $container->get('code_transform.updater')
             );
-        });
+        }, [ self::TAG_MACRO => [] ]);
     }
 
     private function registerUpdater(ContainerBuilder $container)
@@ -277,5 +303,21 @@ class CodeTransformExtension implements Extension
         $container->register('code_transform.builder_factory', function (Container $container) {
             return new WorseBuilderFactory($container->get('reflection.reflector'));
         });
+    }
+
+    private function registerRpc(ContainerBuilder $container)
+    {
+        $container->register('code_transform.rpc.refactor.handler_registry', function (Container $container) {
+            $handlers = [];
+            foreach ($container->get('code_transform.macro.registry')->all() as $macro) {
+                $handlers[] = new MacroHandler(
+                    $container->get('code_transform.macro.definition_factory'),
+                    $container->get('code_transform.macro.runner'),
+                    $macro
+                );
+            }
+
+            return new HandlerRegistry($handlers);
+        }, [ RpcExtension::TAG_RPC_HANDLER_REGISTRY ]);
     }
 }

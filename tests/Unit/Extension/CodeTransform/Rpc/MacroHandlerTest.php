@@ -24,7 +24,7 @@ class MacroHandlerTest extends TestCase
     {
         $macro = new class implements Macro {
             public function name() { return 'test_macro'; }
-            public function __invoke(SourceCode $sourceCode, int $offset, string $name): SourceCode { return $sourceCode; }
+            public function __invoke(SourceCode $source, int $offset, string $name): SourceCode { return $source; }
         };
         $registry = new MacroRegistry([
             $macro
@@ -37,20 +37,21 @@ class MacroHandlerTest extends TestCase
     public function testAsksForMissingArguments()
     {
         $response = $this->handler->handle([
-            'path' => '/fo'
+            'path' => '/fo',
+            'source' => '<?php',
         ]);
 
         $this->assertInstanceOf(InputCallbackResponse::class, $response);
         assert($response instanceof InputCallbackResponse);
-        $this->assertCount(3, $response->inputs());
-        $this->assertEquals(TextInput::fromNameLabelAndDefault('offset', 'offset', null), $response->inputs()[1]);
+        $this->assertCount(2, $response->inputs());
+        $this->assertEquals(TextInput::fromNameLabelAndDefault('offset', 'offset', null), $response->inputs()[0]);
     }
 
     public function testProcessesMacro()
     {
         $response = $this->handler->handle([
-            'sourceCode' => SourceCode::fromStringAndPath('<?php', '/path'),
-            'path' => 'path',
+            'source' => '<?php',
+            'path' => '/path',
             'offset' => 1234,
             'name' => 'hello',
         ]);
