@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Unit\Extension\SourceCodeFilesystem\Rpc;
 
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
 use Phpactor\Extension\Rpc\Handler\ClassSearchHandler;
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
 use Phpactor\Extension\Rpc\Response\ReturnChoiceResponse;
@@ -22,7 +22,7 @@ class ClassSearchHandlerTest extends HandlerTestCase
         $this->classSearch = $this->prophesize(ClassSearch::class);
     }
 
-    public function createHandler(): Handler
+    public function createHandler(): DefaultParameterHandler
     {
         return new ClassSearchHandler(
             $this->classSearch->reveal()

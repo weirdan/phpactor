@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\WorseReflection\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\Rpc\Handler\OffsetInfoHandler;
 use Phpactor\Extension\Rpc\Response\InformationResponse;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -16,7 +16,7 @@ class OffsetInfoHandlerTest extends HandlerTestCase
 EOT
     ;
 
-    public function createHandler(): Handler
+    public function createHandler(): DefaultParameterHandler
     {
         return new OffsetInfoHandler(
             ReflectorBuilder::create()->addSource(self::SOURCE)->build()

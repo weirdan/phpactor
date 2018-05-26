@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ClassInflectHandler;
 use Phpactor\Extension\CodeTransform\Application\ClassInflect;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
@@ -31,7 +31,7 @@ class ClassInflectHandlerTest extends HandlerTestCase
         $this->classInflect = $this->prophesize(ClassInflect::class);
     }
 
-    public function createHandler(): Handler
+    public function createHandler(): DefaultParameterHandler
     {
         return new ClassInflectHandler($this->classInflect->reveal());
     }

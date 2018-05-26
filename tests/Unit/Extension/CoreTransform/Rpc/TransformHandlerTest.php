@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\CodeTransform\Domain\Transformer;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
@@ -29,7 +29,7 @@ class TransformHandlerTest extends HandlerTestCase
         $this->transformer = $this->prophesize(CodeTransform::class);
     }
 
-    public function createHandler(): Handler
+    public function createHandler(): DefaultParameterHandler
     {
         return new TransformHandler($this->transformer->reveal());
     }

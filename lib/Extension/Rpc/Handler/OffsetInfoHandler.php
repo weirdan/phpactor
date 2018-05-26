@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\Handler;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
@@ -10,7 +10,7 @@ use Phpactor\Extension\Rpc\Response\InformationResponse;
 use Phpactor\WorseReflection\Core\Reflection\ReflectionOffset;
 use Phpactor\WorseReflection\Core\Type;
 
-class OffsetInfoHandler implements Handler
+class OffsetInfoHandler implements DefaultParameterHandler
 {
     /**
      * @var Reflector

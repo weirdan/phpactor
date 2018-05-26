@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\CodeTransform\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\CodeTransform\Application\Transformer;
 use Phpactor\CodeTransform\CodeTransform;
 use Phpactor\Extension\Rpc\Response\Input\ChoiceInput;
@@ -11,7 +11,7 @@ use Phpactor\Extension\Rpc\Request;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
 
-class TransformHandler implements Handler
+class TransformHandler implements DefaultParameterHandler
 {
     /**
      * @var Transformer

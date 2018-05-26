@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\CodeTransform\Domain\SourceCode;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
@@ -28,7 +28,7 @@ class ExtractConstantHandlerTest extends HandlerTestCase
         $this->extractConstant = $this->prophesize(ExtractConstant::class);
     }
 
-    public function createHandler(): Handler
+    public function createHandler(): DefaultParameterHandler
     {
         return new ExtractConstantHandler($this->extractConstant->reveal());
     }

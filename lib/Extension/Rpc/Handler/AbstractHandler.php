@@ -2,12 +2,12 @@
 
 namespace Phpactor\Extension\Rpc\Handler;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\Rpc\Response\Input\Input;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Request;
 
-abstract class AbstractHandler implements Handler
+abstract class AbstractHandler implements DefaultParameterHandler
 {
     private $requiredArguments = [];
 

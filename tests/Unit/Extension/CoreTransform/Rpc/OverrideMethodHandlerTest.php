@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
 
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
 use Phpactor\Extension\CodeTransform\Rpc\OverrideMethodHandler;
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\CodeTransform\Domain\Refactor\OverrideMethod;
 use Phpactor\CodeTransform\Domain\SourceCode as TransformSourceCode;
 use Phpactor\Extension\Rpc\Response\ReplaceFileSourceResponse;
@@ -29,7 +29,7 @@ class OverrideMethodHandlerTest extends HandlerTestCase
         $this->overrideMethod = $this->prophesize(OverrideMethod::class);
     }
 
-    public function createHandler(): Handler
+    public function createHandler(): DefaultParameterHandler
     {
         return new OverrideMethodHandler(
             $this->reflector,

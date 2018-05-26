@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\ClassMover\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\ClassMover\Application\ClassReferences;
 use Phpactor\Extension\ClassMover\Rpc\ReferencesHandler;
 use Phpactor\Extension\Rpc\Response\FileReferencesResponse;
@@ -59,7 +59,7 @@ class ReferencesHandlerTest extends HandlerTestCase
         $this->filesystemRegistry = $this->prophesize(FilesystemRegistry::class);
     }
 
-    public function createHandler(): Handler
+    public function createHandler(): DefaultParameterHandler
     {
         return new ReferencesHandler(
             $this->reflector,

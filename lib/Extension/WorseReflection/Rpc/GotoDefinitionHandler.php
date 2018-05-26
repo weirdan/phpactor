@@ -2,14 +2,14 @@
 
 namespace Phpactor\Extension\WorseReflection\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\Rpc\Response\OpenFileResponse;
 use Phpactor\Extension\WorseReflection\GotoDefinition\GotoDefinition;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
 
-class GotoDefinitionHandler implements Handler
+class GotoDefinitionHandler implements DefaultParameterHandler
 {
     const NAME = 'goto_definition';
     const PARAM_OFFSET = 'offset';

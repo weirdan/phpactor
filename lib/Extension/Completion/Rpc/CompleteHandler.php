@@ -2,11 +2,11 @@
 
 namespace Phpactor\Extension\Completion\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\Completion\Application\Complete;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
 
-class CompleteHandler implements Handler
+class CompleteHandler implements DefaultParameterHandler
 {
     const NAME = 'complete';
     const PARAM_SOURCE = 'source';

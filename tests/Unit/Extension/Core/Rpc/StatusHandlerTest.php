@@ -3,7 +3,7 @@
 namespace Phpactor\Tests\Unit\Extension\Core\Rpc;
 
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\Core\Application\Status;
 use Prophecy\Prophecy\ObjectProphecy;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
@@ -28,7 +28,7 @@ class StatusHandlerTest extends HandlerTestCase
         $this->paths = $this->prophesize(Paths::class);
     }
 
-    public function createHandler(): Handler
+    public function createHandler(): DefaultParameterHandler
     {
         return new StatusHandler(
             $this->status->reveal(),

@@ -2,6 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\RequestHandler;
 
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\Rpc\HandlerRegistry;
 use Phpactor\Extension\Rpc\RequestHandler as CoreRequestHandler;
 use Phpactor\Extension\Rpc\Request;
@@ -25,17 +26,21 @@ class RequestHandler implements CoreRequestHandler
         $handler = $this->registry->get($request->name());
 
         $parameters = $request->parameters();
-        $defaults = $handler->defaultParameters();
 
-        if ($diff = array_diff(array_keys($parameters), array_keys($defaults))) {
-            throw new \InvalidArgumentException(sprintf(
-                'Invalid arguments "%s" for handler "%s", valid arguments: "%s"',
-                implode('", "', $diff),
-                $handler->name(),
-                implode('", "', array_keys($defaults))
-            ));
+        if ($handler instanceof DefaultParameterHandler) {
+            $defaults = $handler->defaultParameters();
+
+            if ($diff = array_diff(array_keys($parameters), array_keys($defaults))) {
+                throw new \InvalidArgumentException(sprintf(
+                    'Invalid arguments "%s" for handler "%s", valid arguments: "%s"',
+                    implode('", "', $diff),
+                    $handler->name(),
+                    implode('", "', array_keys($defaults))
+                ));
+            }
+            $parameters = array_merge($defaults, $parameters);
         }
 
-        return $handler->handle(array_merge($defaults, $parameters));
+        return $handler->handle($parameters);
     }
 }

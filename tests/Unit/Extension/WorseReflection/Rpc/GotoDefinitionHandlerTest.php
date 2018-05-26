@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\WorseReflection\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\WorseReflection\Core\Offset;
 use Phpactor\WorseReflection\ReflectorBuilder;
@@ -26,7 +26,7 @@ class GotoDefinitionHandlerTest extends HandlerTestCase
         $this->reflector = ReflectorBuilder::create()->addSource(SourceCode::fromPath(__FILE__))->build();
     }
 
-    public function createHandler(): Handler
+    public function createHandler(): DefaultParameterHandler
     {
         return new GotoDefinitionHandler(
             $this->reflector

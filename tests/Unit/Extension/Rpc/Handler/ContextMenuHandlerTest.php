@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\Rpc\Handler;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\Rpc\Handler\ContextMenuHandler;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
@@ -54,7 +54,7 @@ class ContextMenuHandlerTest extends HandlerTestCase
         $this->requestHandler = $this->prophesize(RequestHandler::class);
     }
 
-    public function createHandler(): Handler
+    public function createHandler(): DefaultParameterHandler
     {
         return new ContextMenuHandler(
             $this->reflector,

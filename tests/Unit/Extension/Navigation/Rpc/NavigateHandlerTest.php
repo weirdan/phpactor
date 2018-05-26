@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\Navigation\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\Navigation\Handler\NavigateHandler;
 use Phpactor\Extension\Navigation\Application\Navigator;
 use Prophecy\Prophecy\ObjectProphecy;
@@ -36,7 +36,7 @@ class NavigateHandlerTest extends HandlerTestCase
         ];
     }
 
-    public function createHandler(): Handler
+    public function createHandler(): DefaultParameterHandler
     {
         return new NavigateHandler($this->navigator->reveal());
     }

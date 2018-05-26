@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\ClassMover\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\ClassMover\Application\ClassCopy;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\ClassMover\Rpc\ClassCopyHandler;
@@ -28,7 +28,7 @@ class ClassCopyHandlerTest extends HandlerTestCase
         $this->classCopy = $this->prophesize(ClassCopy::class);
     }
 
-    public function createHandler(): Handler
+    public function createHandler(): DefaultParameterHandler
     {
         return new ClassCopyHandler(
             $this->classCopy->reveal()

@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\Handler;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilesystemExtension;
 use Phpactor\Extension\Rpc\Response\ReturnResponse;
@@ -10,7 +10,7 @@ use Phpactor\Extension\Rpc\Response\ReturnOption;
 use Phpactor\Extension\Rpc\Response\ReturnChoiceResponse;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 
-class ClassSearchHandler implements Handler
+class ClassSearchHandler implements DefaultParameterHandler
 {
     const NAME = 'class_search';
     const SHORT_NAME = 'short_name';

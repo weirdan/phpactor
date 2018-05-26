@@ -2,10 +2,10 @@
 
 namespace Phpactor\Extension\Core\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\Rpc\Response\InformationResponse;
 
-class ConfigHandler implements Handler
+class ConfigHandler implements DefaultParameterHandler
 {
     const CONFIG = 'config';
 

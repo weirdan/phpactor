@@ -2,10 +2,10 @@
 
 namespace Phpactor\Extension\Rpc\Handler;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 
-class EchoHandler implements Handler
+class EchoHandler implements DefaultParameterHandler
 {
     public function name(): string
     {

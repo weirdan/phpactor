@@ -2,12 +2,12 @@
 
 namespace Phpactor\Extension\Core\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\Core\Application\Status;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 use Phpactor\Config\Paths;
 
-class StatusHandler implements Handler
+class StatusHandler implements DefaultParameterHandler
 {
     const STATUS = 'status';
 

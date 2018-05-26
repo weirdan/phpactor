@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
 
 use Phpactor\Extension\CodeTransform\Rpc\RenameVariableHandler;
 use Phpactor\CodeTransform\Domain\Refactor\RenameVariable;
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Response\Input\TextInput;
 use Phpactor\CodeTransform\Domain\SourceCode;
@@ -29,7 +29,7 @@ class RenameVariableHandlerTest extends HandlerTestCase
         $this->renameVariable = $this->prophesize(RenameVariable::class);
     }
 
-    public function createHandler(): Handler
+    public function createHandler(): DefaultParameterHandler
     {
         return new RenameVariableHandler($this->renameVariable->reveal());
     }

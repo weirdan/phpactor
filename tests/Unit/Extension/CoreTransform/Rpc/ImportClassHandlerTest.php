@@ -3,7 +3,7 @@
 namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
 
 use Phpactor\Tests\Unit\Extension\Rpc\Handler\HandlerTestCase;
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\CodeTransform\Domain\Refactor\ImportClass;
 use Phpactor\Extension\SourceCodeFilesystem\SourceCodeFilestem\Application\ClassSearch;
 use Phpactor\Extension\CodeTransform\Rpc\ImportClassHandler;
@@ -40,7 +40,7 @@ class ImportClassHandlerTest extends HandlerTestCase
         $this->classSearch = $this->prophesize(ClassSearch::class);
     }
 
-    protected function createHandler(): Handler
+    protected function createHandler(): DefaultParameterHandler
     {
         return new ImportClassHandler(
             $this->importClass->reveal(),

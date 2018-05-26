@@ -2,7 +2,7 @@
 
 namespace Phpactor\Extension\Rpc\Handler;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\WorseReflection\Reflector;
 use Phpactor\WorseReflection\Core\SourceCode;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
@@ -17,7 +17,7 @@ use Phpactor\WorseReflection\Core\Inference\Symbol;
 use Phpactor\Extension\Rpc\Response;
 use Phpactor\Container\Container;
 
-class ContextMenuHandler implements Handler
+class ContextMenuHandler implements DefaultParameterHandler
 {
     const NAME = 'context_menu';
     const PARAMETER_SOURCE = 'source';

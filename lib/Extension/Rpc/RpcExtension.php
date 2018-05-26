@@ -144,51 +144,6 @@ class RpcExtension implements Extension
             );
         }, [ 'rpc.handler' => [] ]);
 
-        $container->register('rpc.handler.extract_constant', function (Container $container) {
-            return new ExtractConstantHandler(
-                $container->get('code_transform.refactor.extract_constant')
-            );
-        }, [ 'rpc.handler' => [] ]);
-
-        $container->register('rpc.handler.extract_method', function (Container $container) {
-            return new ExtractMethodHandler(
-                $container->get('code_transform.refactor.extract_method')
-            );
-        }, [ 'rpc.handler' => [] ]);
-
-        $container->register('rpc.handler.generate_method', function (Container $container) {
-            return new GenerateMethodHandler(
-                $container->get('code_transform.refactor.generate_method')
-            );
-        }, [ 'rpc.handler' => [] ]);
-
-        $container->register('rpc.handler.generate_accessor', function (Container $container) {
-            return new GenerateAccessorHandler(
-                $container->get('code_transform.refactor.generate_accessor')
-            );
-        }, [ 'rpc.handler' => [] ]);
-
-        $container->register('rpc.handler.rename_variable', function (Container $container) {
-            return new RenameVariableHandler(
-                $container->get('code_transform.refactor.rename_variable')
-            );
-        }, [ 'rpc.handler' => [] ]);
-
-        $container->register('rpc.handler.override_method', function (Container $container) {
-            return new OverrideMethodHandler(
-                $container->get('reflection.reflector'),
-                $container->get('code_transform.refactor.override_method')
-            );
-        }, [ 'rpc.handler' => [] ]);
-
-        $container->register('rpc.handler.refactor.import_class', function (Container $container) {
-            return new ImportClassHandler(
-                $container->get('code_transform.refactor.class_import'),
-                $container->get('application.class_search'),
-                $container->getParameter('rpc.class_search.filesystem')
-            );
-        }, [ 'rpc.handler' => [] ]);
-
         $container->register('rpc.handler.cache_clear', function (Container $container) {
             return new CacheClearHandler(
                 $container->get('application.cache_clear')

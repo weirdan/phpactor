@@ -4,7 +4,7 @@ namespace Phpactor\Tests\Unit\Extension\Rpc;
 
 use PHPUnit\Framework\TestCase;
 use Phpactor\Extension\Rpc\HandlerRegistry;
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\Rpc\RequestHandler\RequestHandler;
 use Phpactor\Extension\Rpc\Response;
 use Phpactor\Extension\Rpc\Request;
@@ -30,7 +30,7 @@ class RequestHandlerTest extends TestCase
     public function setUp()
     {
         $this->handlerRegistry = $this->prophesize(HandlerRegistry::class);
-        $this->handler = $this->prophesize(Handler::class);
+        $this->handler = $this->prophesize(DefaultParameterHandler::class);
 
         $this->requestHandler = new RequestHandler(
             $this->handlerRegistry->reveal()

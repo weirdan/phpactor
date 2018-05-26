@@ -2,11 +2,11 @@
 
 namespace Phpactor\Extension\Core\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\Core\Application\CacheClear;
 use Phpactor\Extension\Rpc\Response\EchoResponse;
 
-class CacheClearHandler implements Handler
+class CacheClearHandler implements DefaultParameterHandler
 {
     const CACHE_CLEAR = 'cache_clear';
 

@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\ClassMover\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\ClassMover\Application\ClassMover;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
 use Phpactor\Extension\Rpc\Request;
@@ -33,7 +33,7 @@ class ClassMoveHandlerTest extends HandlerTestCase
         $this->classMover = $this->prophesize(ClassMover::class);
     }
 
-    public function createHandler(): Handler
+    public function createHandler(): DefaultParameterHandler
     {
         return new ClassMoveHandler(
             $this->classMover->reveal(),

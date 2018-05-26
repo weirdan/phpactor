@@ -2,7 +2,7 @@
 
 namespace Phpactor\Tests\Unit\Extension\CoreTransform\Rpc;
 
-use Phpactor\Extension\Rpc\Handler;
+use Phpactor\Extension\Rpc\DefaultParameterHandler;
 use Phpactor\Extension\CodeTransform\Rpc\ClassNewHandler;
 use Phpactor\Extension\CodeTransform\Application\ClassNew;
 use Phpactor\Extension\Rpc\Response\InputCallbackResponse;
@@ -30,7 +30,7 @@ class ClassNewHandlerTest extends HandlerTestCase
         $this->classNew = $this->prophesize(ClassNew::class);
     }
 
-    public function createHandler(): Handler
+    public function createHandler(): DefaultParameterHandler
     {
         return new ClassNewHandler($this->classNew->reveal());
     }
